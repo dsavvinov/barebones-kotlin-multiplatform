@@ -37,12 +37,24 @@ buildInfra
         └── license
 ```
 
+## Repository structure, how to read it
+
+`sources` folder contains several connected simple projects (two Kotlin Multiplatform libraries, and Android/iOS apps) that will be used to demonstrate how Kotlin Multiplatform is compiled,
+packaged, distributed and consumed in Kotlin Multiplatform-agnostic clients.
+
+`buildInfra` contains stuff which is usually of a build system concern. `buildInfra/tools` contains various "external" tools like compilers or libraries, necessary for compiling projects
+in subject. `buildInfra/logic` contains a logic that descirbes the whole process of compilation and distribution. This logic is written in form of a Kotlin program - reasons for that
+are purely subjective, and it should be trivial to convert this logic to any scripting language (like Python), plain shell (like bash), or even into a plugin for a different build system.
+
 ## Use-case description
 
-- explain iosMain
-- explain limitation with jvm (in TransitiveDependency)
+There are two Kotlin Multiplatform libraries in `sources/`-folder: `DirectDependency` and `TransitiveDependency`, as well as Android-only app and iOS-app. 
 
-## Sample structure, how to read it
+Both apps depend on `DirectDependency` directly. `DirectDependency`, in turn, depends on `TranstiviveDependency`, so apps see `TransitiveDependency` ... transtively (you probably 
+see the pattern in naming at this point :) ) as well.
+
+Both libraries have the same set of targets: `jvm` (read why not `android()` below), `iosArm64`, `iosX64` and `iosSimulatorArm64`. Using `jvm` target disallows to use Android SDK
+in those libraries. This was done mostly to simplify the environment and implementation and avoid installing Android SDK.
 
 ## Kotlin compilation model
 
@@ -54,3 +66,4 @@ buildInfra
 	- dependsOn graph. expect/actuals are closed.
 - Metadata artifacts and Platform Artifacts, their purpose
 - Metadata compilations and Platform compilations
+- Is .kotlin_metadata needed? (no, but yes)
