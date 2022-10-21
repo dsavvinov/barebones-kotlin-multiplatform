@@ -26,9 +26,9 @@ class HardcodedPaths(val libName: String) {
         val androidTest = File(sharedKmmSources, "androidMain")
     }
 
-    inner class Outputs {
-        val outDir = File("$repoRoot/buildInfra", "output")
+    val outDir = File("$repoRoot/buildInfra", "output")
 
+    inner class Outputs {
         /**
          * Assembly is the direct output of Kotlin Compiler
          */

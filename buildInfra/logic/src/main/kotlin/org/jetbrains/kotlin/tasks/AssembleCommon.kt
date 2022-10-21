@@ -12,6 +12,7 @@ object AssembleCommon : KmpBuildTask("ASSEMBLE_COMMON") {
     }
 
     private fun assembleSourceSet(sourceSetRoot: File, outputDir: File) {
+        outputDir.deleteRecursively()
         val dependencies = HardcodedDependencies.dependencies[sourceSetRoot].orEmpty()
         // NB: note that the separator is : or ;
         // Other multi-value arguments, like -Xcommon-sources use ',' separator
