@@ -10,6 +10,8 @@ class AssembleTests {
 
     @Test
     fun `assemble - DirectDependency - Common`() {
+        main(arrayOf("TRANSITIVE", "ASSEMBLE_COMMON"))
+        main(arrayOf("TRANSITIVE", "PACK_COMMON"))
         main(arrayOf("DIRECT", "ASSEMBLE_COMMON"))
     }
 }

@@ -8,6 +8,7 @@ sealed class KmpBuildTask(val taskName: String) {
     companion object {
         val allTasks = listOf(
             AssembleCommon,
+            PackCommon,
         )
     }
 }
