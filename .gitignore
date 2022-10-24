@@ -17,3 +17,17 @@ build
 *.DS_Store
 
 *.gradle
+
+# Ignoring whole 'tools' except for shellscripts/kotlin-stdlib-common.jar, as they are not distributed with official Kotlin yet
+buildInfra/tools/*
+!buildInfra/tools/kotlinc
+buildInfra/tools/kotlinc/*
+
+!buildInfra/tools/kotlinc/lib
+buildInfra/tools/kotlinc/lib/*
+!buildInfra/tools/kotlinc/lib/kotlin-stdlib-common.jar
+
+!buildInfra/tools/kotlinc/bin
+buildInfra/tools/kotlinc/bin/*
+!buildInfra/tools/kotlinc/bin/kotlinc-metadata
+!buildInfra/tools/kotlinc/bin/kotlinc-metadata.bat
