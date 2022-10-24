@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform") version "1.7.20"
-    id("com.android.library")
 }
 
 group = "org.example"
@@ -11,7 +10,7 @@ repositories {
 }
 
 kotlin {
-    android()
+    jvm()
     ios()
     iosSimulatorArm64()
 
@@ -34,14 +33,5 @@ kotlin {
         val iosSimulatorArm64Test by getting {
             dependsOn(iosTest)
         }
-    }
-}
-
-android {
-    compileSdk = 31
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 31
     }
 }
