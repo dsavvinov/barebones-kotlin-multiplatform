@@ -8,7 +8,6 @@ import java.io.File
 object AssembleCommon : KmpBuildTask("ASSEMBLE_COMMON") {
     override fun execute(paths: HardcodedPaths) {
         assembleSourceSet(paths.Sources().commonMain, paths.Outputs().AssembledBinaries().commonMain)
-        assembleSourceSet(paths.Sources().commonTest, paths.Outputs().AssembledBinaries().commonTest)
     }
 
     private fun assembleSourceSet(sourceSetRoot: File, outputDir: File) {
