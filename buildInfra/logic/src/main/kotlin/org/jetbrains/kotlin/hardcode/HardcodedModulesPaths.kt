@@ -57,12 +57,12 @@ class HardcodedPaths(val libName: String) {
             val commonMain = File(assembly, "commonMain")
             val commonTest = File(assembly, "commonTest")
 
-            val iosDeviceArm64Main = File(assembly, "iosDeviceArm64Main")
-            val iosDeviceArm64Test = File(assembly, "iosDeviceArm64Test")
-            val iosSimX64Main = File(assembly, "iosSimX64Main")
-            val iosSimX64Test = File(assembly, "iosSimX64Test")
-            val iosSimArm64Main = File(assembly, "iosSimArm64Main")
-            val iosSimArm64Test = File(assembly, "iosSimArm64Test")
+            val iosArm64Main = File(assembly, "iosArm64Main.klib")
+            val iosArm64Test = File(assembly, "iosArm64Test.klib")
+            val iosX64Main = File(assembly, "iosX64Main.klib")
+            val iosX64Test = File(assembly, "iosX64Test.klib")
+            val iosSimulatorArm64Main = File(assembly, "iosSimulatorArm64Main.klib")
+            val iosSimulatorArm64Test = File(assembly, "iosSimulatorArm64Test.klib")
 
             val jvmMain = File(assembly, "jvmMain")
             val jvmTest = File(assembly, "jvmTest")
