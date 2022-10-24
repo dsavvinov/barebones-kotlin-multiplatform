@@ -22,8 +22,8 @@ class HardcodedPaths(val libName: String) {
         val iosMain = File(sharedKmmSources, "iosMain")
         val iosTest = File(sharedKmmSources, "iosTest")
 
-        val androidMain = File(sharedKmmSources, "androidMain")
-        val androidTest = File(sharedKmmSources, "androidMain")
+        val jvmMain = File(sharedKmmSources, "jvmMain")
+        val jvmTest = File(sharedKmmSources, "jvmTest")
     }
 
     val outDir = File("$repoRoot/buildInfra", "output")
@@ -45,8 +45,8 @@ class HardcodedPaths(val libName: String) {
             val iosSimArm64Main = File(assembly, "iosSimArm64Main")
             val iosSimArm64Test = File(assembly, "iosSimArm64Test")
 
-            val androidMain = File(assembly, "androidMain")
-            val androidTest = File(assembly, "androidTest")
+            val jvmMain = File(assembly, "jvmMain")
+            val jvmTest = File(assembly, "jvmTest")
         }
 
         inner class Packed {
@@ -54,7 +54,7 @@ class HardcodedPaths(val libName: String) {
 
             val commonJar = File(packed, "common.jar")
 
-            val androidJar = File(packed, "android.jar")
+            val jvmJar = File(packed, "jvm.jar")
 
             /**
              * We distribute two artifacts for native:

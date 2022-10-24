@@ -23,8 +23,8 @@ object HardcodedDependencies {
              * granular dependencies.
              */
             DirectDependency.Sources().commonMain to TransitiveDependency.Outputs().Packed().commonJar,
-            DirectDependency.Sources().androidMain to TransitiveDependency.Outputs().Packed().androidJar,
-            DirectDependency.Sources().iosMain to TransitiveDependency.Outputs().Packed().nativeFramework,
+            DirectDependency.Sources().jvmMain to TransitiveDependency.Outputs().Packed().jvmJar,
+            DirectDependency.Sources().iosMain to TransitiveDependency.Outputs().Packed().nativeKlib,
 
             /**
              * All Kotlin sources need Kotlin Stdlib to be functional. 
@@ -34,12 +34,12 @@ object HardcodedDependencies {
             DirectDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
             TransitiveDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
             // NB: JVM stdlib consists of several parts
-            DirectDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
-            DirectDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
-            DirectDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJdk8,
-            TransitiveDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
-            TransitiveDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
-            TransitiveDependency.Sources().androidMain to HardcodedToolchainsPaths.kotlinStdlibJdk8,
+            DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
+            DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
+            DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk8,
+            TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
+            TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
+            TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk8,
             // NB: kotlin-native compiler pulls the stdlib form its distribution and doesn't require
             // to pass the path to the stdlib explicitly, so we don't declare that dependency here
     ).toMutlivalueMap()
@@ -52,11 +52,11 @@ object HardcodedDependencies {
      */
     val friendDependencies: Map<File, File> = mapOf(
             DirectDependency.Sources().commonTest to DirectDependency.Outputs().Packed().commonJar,
-            DirectDependency.Sources().androidTest to DirectDependency.Outputs().Packed().androidJar,
+            DirectDependency.Sources().jvmTest to DirectDependency.Outputs().Packed().jvmJar,
             DirectDependency.Sources().iosTest to DirectDependency.Outputs().Packed().nativeKlib,
 
             TransitiveDependency.Sources().commonTest to TransitiveDependency.Outputs().Packed().commonJar,
-            TransitiveDependency.Sources().androidTest to TransitiveDependency.Outputs().Packed().androidJar,
+            TransitiveDependency.Sources().jvmTest to TransitiveDependency.Outputs().Packed().jvmJar,
             TransitiveDependency.Sources().iosTest to TransitiveDependency.Outputs().Packed().nativeKlib,
     )
 
@@ -68,13 +68,13 @@ object HardcodedDependencies {
      * some simple/popular cases.
      */
     val dependsOn: Map<File, File> = mapOf(
-            DirectDependency.Sources().androidMain to DirectDependency.Sources().commonMain,
-            DirectDependency.Sources().androidTest to DirectDependency.Sources().commonTest,
+            DirectDependency.Sources().jvmMain to DirectDependency.Sources().commonMain,
+            DirectDependency.Sources().jvmTest to DirectDependency.Sources().commonTest,
             DirectDependency.Sources().iosMain to DirectDependency.Sources().commonMain,
             DirectDependency.Sources().iosTest to DirectDependency.Sources().commonTest,
 
-            TransitiveDependency.Sources().androidMain to TransitiveDependency.Sources().commonMain,
-            TransitiveDependency.Sources().androidTest to TransitiveDependency.Sources().commonTest,
+            TransitiveDependency.Sources().jvmMain to TransitiveDependency.Sources().commonMain,
+            TransitiveDependency.Sources().jvmTest to TransitiveDependency.Sources().commonTest,
             TransitiveDependency.Sources().iosMain to TransitiveDependency.Sources().commonMain,
             TransitiveDependency.Sources().iosTest to TransitiveDependency.Sources().commonTest,
     )
