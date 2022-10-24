@@ -19,11 +19,30 @@ class HardcodedPaths(val libName: String) {
         val commonMain = File(sharedKmmSources, "commonMain")
         val commonTest = File(sharedKmmSources, "commonTest")
 
+        val jvmMain = File(sharedKmmSources, "jvmMain")
+        val jvmTest = File(sharedKmmSources, "jvmTest")
+
         val iosMain = File(sharedKmmSources, "iosMain")
         val iosTest = File(sharedKmmSources, "iosTest")
 
-        val jvmMain = File(sharedKmmSources, "jvmMain")
-        val jvmTest = File(sharedKmmSources, "jvmTest")
+        // "Leaf" source sets of K/N Targets
+        //
+        // Their sources are empty in the currently present example.
+        // Source sets added to be able to specify dependencies properly in
+        // [HardcodedDependencies]
+        //
+        // It was possible to not specify dependencies for them properly, and handle
+        // that directly in [AssembleNative], but that lead to quite intricate
+        // and hard-to-notice quirks and hurts readability of the code, so I decided
+        // against that
+        val iosArm64Main = File(sharedKmmSources, "iosArm64Main")
+        val iosArm64Test = File(sharedKmmSources, "iosArm64Test")
+
+        val iosX64Main = File(sharedKmmSources, "iosX64Main")
+        val iosX64Test = File(sharedKmmSources, "iosX64Test")
+
+        val iosSimulatorArm64Main = File(sharedKmmSources, "iosSimulatorArm64Main")
+        val iosSimulatorArm64Test = File(sharedKmmSources, "iosSimulatorArm64Test")
     }
 
     val outDir = File("$repoRoot/buildInfra", "output")
