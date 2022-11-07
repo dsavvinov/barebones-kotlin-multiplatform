@@ -28,10 +28,10 @@ class PackTests {
 
         @Test
         fun `pack - DirectDependency - JVM`() {
-            main(arrayOf("TRANSITIVE", "ASSEMBLE_COMMON"))
-            main(arrayOf("TRANSITIVE", "PACK_COMMON"))
-            main(arrayOf("DIRECT", "ASSEMBLE_COMMON"))
-            main(arrayOf("DIRECT", "PACK_COMMON"))
+            main(arrayOf("TRANSITIVE", "ASSEMBLE_JVM"))
+            main(arrayOf("TRANSITIVE", "PACK_JVM"))
+            main(arrayOf("DIRECT", "ASSEMBLE_JVM"))
+            main(arrayOf("DIRECT", "PACK_JVM"))
         }
     }
 
@@ -43,7 +43,14 @@ class PackTests {
         }
 
         @Test
-        fun `link - DirectDependency - Native - Release - iosSimulatorArm64`() {
+        fun `link - DirectDependency - Native - Debug - iosSimulatorArm64`() {
+            main(arrayOf("TRANSITIVE", "ASSEMBLE_IOS_SIMULATOR_ARM64_DEBUG"))
+            main(arrayOf("DIRECT", "ASSEMBLE_IOS_SIMULATOR_ARM64_DEBUG"))
+            main(arrayOf("DIRECT", "LINK_IOS_SIMULATOR_ARM64_DEBUG"))
+        }
+
+        @Test
+        fun `link - DirectDependency - Native - Release - iosArm64`() {
             main(arrayOf("TRANSITIVE", "ASSEMBLE_IOS_SIMULATOR_ARM64_RELEASE"))
             main(arrayOf("DIRECT", "ASSEMBLE_IOS_SIMULATOR_ARM64_RELEASE"))
             main(arrayOf("DIRECT", "LINK_IOS_SIMULATOR_ARM64_RELEASE"))
