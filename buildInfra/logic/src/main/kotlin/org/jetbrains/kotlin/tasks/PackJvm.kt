@@ -3,7 +3,7 @@ package org.jetbrains.kotlin.tasks
 import org.jetbrains.kotlin.hardcode.HardcodedPaths
 import org.jetbrains.kotlin.packJar
 
-object PackJvm : KmpBuildTask("PACK_JVM") {
+object PackJvm : KmpProjectBuildTask("PACK_JVM") {
     override fun execute(paths: HardcodedPaths) {
         packJar(
             destination = paths.Outputs().Packed().jvmJar,
