@@ -9,14 +9,20 @@
 
 buildInfra/output/
 
+# Xcode user settings
+xcuserdata/
 
 *.class
 
+# Gradle build folder, used in Android App
 build
 
 *.DS_Store
 
 *.gradle
+
+# Local Gradle properties
+local.properties
 
 # Ignoring whole 'tools' except for shellscripts/kotlin-stdlib-common.jar, as they are not distributed with official Kotlin yet
 buildInfra/tools/*
