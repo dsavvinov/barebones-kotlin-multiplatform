@@ -15,6 +15,10 @@ MVP of Kotlin Multiplatform library/app built with barebones without Gradle
 3. From the same release, download the `kotlin-native-<your-host>-<version>.zip` (I've used `macos-aarch64` for testing), unpack its contents to `buildInfra/tools` and **rename it to 
 	just `kotlin-native`**. 
 
+4. Sometimes, macOS might be over-paranoid and forbid to use .dylibs in the `buildInfra/tools/kotlin-native/konan/nativeLib`. You will see that as macOS warning `<Binary name> can't be opened because
+Apple cannot check it for malicious software. This software needs to be updated. Contact the developer for more information`. All the generic fixes from internet should work, the one I used: open binary
+ manually from Finder, macOS will properly prompt you if you want to open it. Choose "Open" and it will be remembered as an exception
+
 There's the resulting file structure you should get:
 
 ```
@@ -50,11 +54,12 @@ are purely subjective, and it should be trivial to convert this logic to any scr
 
 There are two Kotlin Multiplatform libraries in `sources/`-folder: `DirectDependency` and `TransitiveDependency`, as well as Android-only app and iOS-app. 
 
-Both apps depend on `DirectDependency` directly. `DirectDependency`, in turn, depends on `TranstiviveDependency`, so apps see `TransitiveDependency` ... transtively (you probably 
+Both apps depend on `DirectDependency` directly. `DirectDependency`, in turn, depends on `TranstiviveDependency`, so apps see `TransitiveDependency` ... transitively (you probably 
 see the pattern in naming at this point :) ) as well.
 
-Both libraries have the same set of targets: `jvm` (read why not `android()` below), `iosArm64`, `iosX64` and `iosSimulatorArm64`. Using `jvm` target disallows to use Android SDK
-in those libraries. This was done mostly to simplify the environment and implementation and avoid installing Android SDK.
+Both libraries have the same set of targets: `jvm` (read why not `android()` below), `iosArm64`, `iosX64` and `iosSimulatorArm64`. 
+
+Using `jvm` target disallows using Android SDK in those libraries. This was done mostly to simplify the environment and implementation and avoid installing Android SDK.
 
 ## Kotlin compilation model
 
@@ -67,3 +72,4 @@ in those libraries. This was done mostly to simplify the environment and impleme
 - Metadata artifacts and Platform Artifacts, their purpose
 - Metadata compilations and Platform compilations
 - Is .kotlin_metadata needed? (no, but yes)
+- iosMain - looks like a leaf, but it's not (and that's why we're not compiling it)
