@@ -43,6 +43,13 @@ class HardcodedPaths(val libName: String) {
 
         val iosSimulatorArm64Main = File(sharedKmmSources, "iosSimulatorArm64Main")
         val iosSimulatorArm64Test = File(sharedKmmSources, "iosSimulatorArm64Test")
+
+        fun mainNativeSourceSetForTarget(kotlinNativeTargetName: String) = when (kotlinNativeTargetName) {
+            "ios_arm64" -> iosArm64Main
+            "ios_X64" -> iosX64Main
+            "ios_simulator_arm64" -> iosSimulatorArm64Main
+            else -> error("Unknown Kotlin/Native target $kotlinNativeTargetName")
+        }
     }
 
     val outDir = File("$repoRoot/buildInfra", "output")
@@ -58,14 +65,18 @@ class HardcodedPaths(val libName: String) {
             val commonTest = File(assembly, "commonTest")
 
             val iosArm64Main = File(assembly, "iosArm64Main.klib")
-            val iosArm64Test = File(assembly, "iosArm64Test.klib")
             val iosX64Main = File(assembly, "iosX64Main.klib")
-            val iosX64Test = File(assembly, "iosX64Test.klib")
             val iosSimulatorArm64Main = File(assembly, "iosSimulatorArm64Main.klib")
-            val iosSimulatorArm64Test = File(assembly, "iosSimulatorArm64Test.klib")
 
             val jvmMain = File(assembly, "jvmMain")
             val jvmTest = File(assembly, "jvmTest")
+
+            fun mainKlibForNativeTarget(kotlinNativeTargetName: String) = when (kotlinNativeTargetName) {
+                "ios_arm64" -> iosArm64Main
+                "ios_X64" -> iosX64Main
+                "ios_simulator_arm64" -> iosSimulatorArm64Main
+                else -> error("Unknown Kotlin/Native target $kotlinNativeTargetName")
+            }
         }
 
         inner class Packed {
@@ -75,16 +86,19 @@ class HardcodedPaths(val libName: String) {
 
             val jvmJar = File(packed, "jvm.jar")
 
-            /**
-             * We distribute two artifacts for native:
-             * - klib contains information about declarations and their bodies in Kotlin-specific binary format
-             *   Because the format is Kotlin-specific, only Kotlin can consume those libraries
-             *
-             * - NativeFramework is a usual iOS framework, linked from respective KLib, containing Obj-C code and
-             *   Swift Headers. It is consumable by native iOS clients.
-             */
-            val nativeKlib = File(packed, "native.klib")
-            val nativeFramework = File(packed, "nativeFramework")
+            val iosArm64DebugFramework = File(packed, "iosArm64/debugFramework/$libName.framework")
+            val iosArm64ReleaseFramework = File(packed, "iosArm64/releaseFramework/$libName.framework")
+            val iosX64DebugFramework = File(packed, "iosX64Main/debugFramework/$libName.framework")
+            val iosX64ReleaseFramework = File(packed, "iosX64Main/releaseFramework/$libName.framework")
+            val iosSimulatorArm64DebugFramework = File(packed, "iosSimulatorArm64Main/debugFramework/$libName.framework")
+            val iosSimulatorArm64ReleaseFramework = File(packed, "iosSimulatorArm64Main/releaseFramework/$libName.framework")
+
+            fun frameworkForNativeTarget(kotlinNativeTargetName: String, debug: Boolean) = when (kotlinNativeTargetName) {
+                "ios_arm64" -> if (debug) iosArm64DebugFramework else iosArm64ReleaseFramework
+                "ios_X64" -> if (debug) iosX64DebugFramework else iosX64ReleaseFramework
+                "ios_simulator_arm64" -> if (debug) iosSimulatorArm64DebugFramework else iosSimulatorArm64ReleaseFramework
+                else -> error("Unknown Kotlin/Native target $kotlinNativeTargetName")
+            }
         }
     }
 }

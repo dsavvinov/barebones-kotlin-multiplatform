@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.hardcode.HardcodedPaths
 import org.jetbrains.kotlin.tools.KotlincMetadata
 import java.io.File
 
-object AssembleCommon : KmpBuildTask("ASSEMBLE_COMMON") {
+object AssembleCommon : KmpProjectBuildTask("ASSEMBLE_COMMON") {
     override fun execute(paths: HardcodedPaths) {
         assembleSourceSet(paths.Sources().commonMain, paths.Outputs().AssembledBinaries().commonMain)
     }
@@ -32,7 +32,8 @@ object AssembleCommon : KmpBuildTask("ASSEMBLE_COMMON") {
             if (friendDependencies != null) add("-Xfriend-paths=${friendDependencies.canonicalPath}")
 
             // Pass dependsOn-path a.ka. refines-paths
-            if (dependsOn != null) add ("-Xrefines-paths=${dependsOn.canonicalPath}")
+            if (dependsOn != null) add("-Xcommon-sources=${dependsOn.joinToString(separator = ",") { it.canonicalPath }}")
+            // TODO(dsavvinov): this is wrong, fix
 
             // Dependencies go as "classpath"
             add("-classpath")

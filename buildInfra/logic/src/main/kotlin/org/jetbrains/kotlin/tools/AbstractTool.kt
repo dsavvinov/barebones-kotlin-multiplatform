@@ -10,4 +10,6 @@ abstract class AbstractTool(private val executable: File) {
             inheritIO()
         }.start().waitFor()
     }
+
+    fun execute(args: List<String>) = execute(*args.toTypedArray())
 }

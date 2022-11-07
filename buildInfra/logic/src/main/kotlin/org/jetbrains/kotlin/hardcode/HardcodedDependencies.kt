@@ -24,7 +24,11 @@ object HardcodedDependencies {
          */
         DirectDependency.Sources().commonMain to TransitiveDependency.Outputs().Packed().commonJar,
         DirectDependency.Sources().jvmMain to TransitiveDependency.Outputs().Packed().jvmJar,
-        DirectDependency.Sources().iosMain to TransitiveDependency.Outputs().Packed().nativeKlib,
+        // TODO(dsavvinov): not correct, figure out what to do with iOSMain
+//        DirectDependency.Sources().iosMain to TransitiveDependency.Outputs().Packed().nativeKlib,
+        DirectDependency.Sources().iosArm64Main to TransitiveDependency.Outputs().AssembledBinaries().iosArm64Main,
+        DirectDependency.Sources().iosX64Main to TransitiveDependency.Outputs().AssembledBinaries().iosX64Main,
+        DirectDependency.Sources().iosSimulatorArm64Main to TransitiveDependency.Outputs().AssembledBinaries().iosSimulatorArm64Main,
 
         /**
          * All Kotlin sources need Kotlin Stdlib to be functional.
@@ -33,6 +37,7 @@ object HardcodedDependencies {
          */
         DirectDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
         TransitiveDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
+
         // NB: JVM stdlib consists of several parts
         DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
         DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
@@ -40,7 +45,8 @@ object HardcodedDependencies {
         TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
         TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
         TransitiveDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk8,
-        // NB: kotlin-native compiler pulls the stdlib form its distribution and doesn't require
+
+        // NB: kotlin-native compiler pulls the stdlib from its distribution and doesn't require
         // to pass the path to the stdlib explicitly, so we don't declare that dependency here
     ).toMutlivalueMap()
 
@@ -53,11 +59,13 @@ object HardcodedDependencies {
     val friendDependencies: Map<File, File> = mapOf(
         DirectDependency.Sources().commonTest to DirectDependency.Outputs().Packed().commonJar,
         DirectDependency.Sources().jvmTest to DirectDependency.Outputs().Packed().jvmJar,
-        DirectDependency.Sources().iosTest to DirectDependency.Outputs().Packed().nativeKlib,
+        // TODO(dsavvinov): iosMain
+        // DirectDependency.Sources().iosTest to DirectDependency.Outputs().Packed().nativeKlib,
 
         TransitiveDependency.Sources().commonTest to TransitiveDependency.Outputs().Packed().commonJar,
         TransitiveDependency.Sources().jvmTest to TransitiveDependency.Outputs().Packed().jvmJar,
-        TransitiveDependency.Sources().iosTest to TransitiveDependency.Outputs().Packed().nativeKlib,
+        // TODO(dsavvinov): iosMain
+        // TransitiveDependency.Sources().iosTest to TransitiveDependency.Outputs().Packed().nativeKlib,
     )
 
     /**
@@ -68,8 +76,8 @@ object HardcodedDependencies {
      * some simple/popular cases.
      *
      * Also note, that if users ever specify dependsOn by hand, they only declare direct dependsOn edges, but not
-     * transitive ones, e.g. iosArm64Main -> iosMain, but not iosArm64Main -> commonMain. Tooling needs full clojure,
-     * which is usually built by build tools. Here we specify the full clojure.
+     * transitive ones, e.g. iosArm64Main -> iosMain, but not iosArm64Main -> commonMain. Compiler needs the full
+     * clojure, which is usually built by build tools. Here we specify the full clojure.
      */
     val dependsOn: Map<File, List<File>> =
         DirectDependency.Sources().hardcodedDependsOnGraph() + TransitiveDependency.Sources().hardcodedDependsOnGraph()

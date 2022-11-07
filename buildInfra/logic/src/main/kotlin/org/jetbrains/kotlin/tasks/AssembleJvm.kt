@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.hardcode.HardcodedPaths
 import org.jetbrains.kotlin.tools.KotlincJvm
 import java.io.File
 
-object AssembleJvm : KmpBuildTask("ASSEMBLE_JVM") {
+object AssembleJvm : KmpProjectBuildTask("ASSEMBLE_JVM") {
     override fun execute(paths: HardcodedPaths) {
         assembleSourceSet(paths.Sources().jvmMain, paths.Outputs().AssembledBinaries().jvmMain)
     }
@@ -24,7 +24,7 @@ object AssembleJvm : KmpBuildTask("ASSEMBLE_JVM") {
         val arguments = buildList<String> {
             // -Xcommon-sources marks sources as common. Some language constructs (like 'expect'-modifier)
             // are allowed only in sources marked as common
-            if (dependsOn != null) add("-Xcommon-sources=${dependsOn.canonicalPath}")
+            if (dependsOn != null) add("-Xcommon-sources=${dependsOn.joinToString(separator = ",") { it.canonicalPath }}")
 
             // Enable multiplatform support
             add("-Xmulti-platform")
@@ -48,7 +48,7 @@ object AssembleJvm : KmpBuildTask("ASSEMBLE_JVM") {
             // TODO(dsavvinov): probably better to lift the common logic, so readers can clearly see what is the same
             //  and what's different
             add(sourceSetRoot.canonicalPath)
-            if (dependsOn != null) add(dependsOn.canonicalPath)
+            dependsOn.orEmpty().forEach { add(it.canonicalPath) }
         }
 
         KotlincJvm.execute(*arguments.toTypedArray())

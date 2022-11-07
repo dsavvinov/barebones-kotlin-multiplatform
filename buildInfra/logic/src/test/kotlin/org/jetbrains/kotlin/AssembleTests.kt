@@ -31,4 +31,17 @@ class AssembleTests {
             main(arrayOf("DIRECT", "ASSEMBLE_JVM"))
         }
     }
+
+    class Native {
+        @Test
+        fun `assemble - TransitiveDependency - Native (iosArm64)`() {
+            main(arrayOf("TRANSITIVE", "ASSEMBLE_IOSARM64"))
+        }
+
+        @Test
+        fun `assemble - DirectDependency - Native (iosArm64)`() {
+            main(arrayOf("TRANSITIVE", "ASSEMBLE_IOSARM64"))
+            main(arrayOf("DIRECT", "ASSEMBLE_IOSARM64"))
+        }
+    }
 }
