@@ -1,7 +1,7 @@
 package org.jetbrains.kotlin.direct
 
-import org.jetbrains.kotlin.transitive.TransitiveCommon
+import org.jetbrains.kotlin.transitive.TransitiveExpect
 
-fun useTransitive() {
-    println(TransitiveCommon().value)
+fun consumeTransitiveExpectInCommon(tc: TransitiveExpect) {
+    println(tc.value)
 }

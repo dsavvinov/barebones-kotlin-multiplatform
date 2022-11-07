@@ -1,5 +1,5 @@
 package org.jetbrains.kotlin.transitive
 
-class TransitiveCommon {
-    val value: String = "Common, transitive"
+expect class TransitiveExpect {
+    val value: String
 }
