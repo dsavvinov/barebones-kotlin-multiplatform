@@ -2,7 +2,7 @@ package org.jetbrains.kotlin
 
 import org.jetbrains.kotlin.hardcode.DirectDependency
 import org.jetbrains.kotlin.hardcode.TransitiveDependency
-import org.jetbrains.kotlin.tasks.KmpBuildTask
+import org.jetbrains.kotlin.tasks.KmpProjectBuildTask
 
 fun main(args: Array<String>) {
     fun error(message: String) {
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
         else -> return error("Unknown project $projectName")
     }
 
-    val task = KmpBuildTask.allTasks.firstOrNull { it.taskName == taskName }
+    val task = KmpProjectBuildTask.allTasks.firstOrNull { it.taskName == taskName }
         ?: return error("Unknown task $taskName")
 
     task.execute(projectPaths)
@@ -36,20 +36,25 @@ fun printUsage() {
             kmpBuilder <PROJECT> <TASK>
         
         Available projects:
-            DIRECT - tasks related to 'sources/direct'
-            TRANSITIVE - tasks related to 'sources/transitive'
+            DIRECT - tasks related to 'sources/DirectDependency'
+            TRANSITIVE - tasks related to 'sources/TransitiveDependency'
         
         Available tasks:
-            ASSEMBLE_COMMON - invokes K/Common compiler, produces .kotlin_metadata in <repo-root>/out/assembly/common(Main|Test)
-            ASSEMBLE_JVM    - invokes K/JVM compiler, produces .classfiles in <repo-root>/out/assembly/jvm(Main|Test)
-            ASSEMBLE_IOS_DEVICE - invokes K/Native compiler, produces TODO in <repo-root>/out/assembly/iosDeviceArm64(Main|Test)
-            ASSEMBLE_IOS_INTEL_SIM - invokes K/Native compiler, produces TODO in <repo-root>/out/assembly/iosSimulatorX64(Main|Test)
-            ASSEMBLE_IOS_ARM_SIM - invokes K/Native compiler, produces TODO in <repo-root>/out/assembly/iosSimulatorArm64(Main|Test)
+            ASSEMBLE_COMMON - invokes K/Common compiler, produces .kotlin_metadata 
+            ASSEMBLE_JVM    - invokes K/JVM compiler, produces .classfiles 
+            ASSEMBLE_<K/N PLATFORM>_<BUILD_TYPE> - invokes K/Native compiler, produces K/N klib
             
-            PACK_COMMON - packs .jar file from <repo-root>/out/jvm into <repo-root>/out/packed/common.jar
-            PACK_JVM - packs .jar file from <repo-root>/out/jvm into <repo-root>/out/packed/jvm.jar
-            PACK_NATIVE - packs XCFramework from <repo-root>/out/ios(.*) into ../buid/packed/XCFramework
-            
-            BUILD - runs all tasks above sequentially, 
+            PACK_COMMON - packs .jar file with .kotlin_metadata
+            PACK_JVM - packs .jar file with .classfiles     
+            LINK_<K/N PLATFORM>_<BUILD_TYPE> - invokes a K/N compiler in linker-mode, produces iOS Framework
+         
+        Available <K/N PLATFORM> values:
+            IOS_ARM64           - iOS 64-bit device (any non-archaic iPhones)
+            IOS_X64             - iPhone simulator running on Intel X64 Macs
+            IOS_SIMULATOR_ARM64 - iPhone simulator running on M1 Macs
+        
+        Available <BUILD_TYPE> values:
+            DEBUG   - debug build, less optimizations, more same and debuggable produced code
+            RELEASE - release build, more aggressive optimizations     
     """.trimIndent())
 }

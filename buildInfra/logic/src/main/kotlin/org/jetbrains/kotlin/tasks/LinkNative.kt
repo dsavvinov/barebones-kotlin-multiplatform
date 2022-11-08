@@ -1,7 +1,9 @@
 package org.jetbrains.kotlin.tasks
 
+import org.jetbrains.kotlin.hardcode.DirectDependency
 import org.jetbrains.kotlin.hardcode.HardcodedDependencies
 import org.jetbrains.kotlin.hardcode.HardcodedPaths
+import org.jetbrains.kotlin.hardcode.TransitiveDependency
 import org.jetbrains.kotlin.tools.KotlincNative
 import java.io.File
 
@@ -14,6 +16,21 @@ abstract class LinkNative(
     private val debug: Boolean
 ) : KmpProjectBuildTask(taskName) {
     override fun execute(paths: HardcodedPaths) {
+        if (paths === TransitiveDependency) {
+            println(
+                """
+                Warning!
+                
+                Calling Link-task on TransitiveDependency might be not what you wanted. In short, K/N Framework linking
+                produces "fat" binary, which includes API of selected module **along with all its dependencies**. 
+                
+                This is not an error because the produced framework won't be incorrect, but it has no use in this 
+                specific example. In this example, to get a framework for plugging into iOS App, you should call
+                Link-task on DirectDependency (it will produce the framework with TransitiveDependency' API included)
+            """.trimIndent()
+            )
+        }
+
         val source = paths.Sources().mainNativeSourceSetForTarget(kotlinNativeTargetName)
         val sourceKlib = paths.Outputs().AssembledBinaries().mainKlibForNativeTarget(kotlinNativeTargetName)
 
