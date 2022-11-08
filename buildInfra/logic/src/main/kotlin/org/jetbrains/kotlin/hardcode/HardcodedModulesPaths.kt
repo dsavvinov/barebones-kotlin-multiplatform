@@ -86,16 +86,23 @@ class HardcodedPaths(val libName: String) {
 
             val jvmJar = File(packed, "jvm.jar")
 
-            val iosArm64DebugFramework = File(packed, "iosArm64/debugFramework/$libName.framework")
-            val iosArm64ReleaseFramework = File(packed, "iosArm64/releaseFramework/$libName.framework")
-            val iosX64DebugFramework = File(packed, "iosX64Main/debugFramework/$libName.framework")
-            val iosX64ReleaseFramework = File(packed, "iosX64Main/releaseFramework/$libName.framework")
-            val iosSimulatorArm64DebugFramework = File(packed, "iosSimulatorArm64Main/debugFramework/$libName.framework")
-            val iosSimulatorArm64ReleaseFramework = File(packed, "iosSimulatorArm64Main/releaseFramework/$libName.framework")
+            /**
+             * IMPORTANT NOTICE
+             *
+             * Paths below are hardcoded, but they can not be chosen entirely arbitrary. They are used on Xcode
+             * side, in "Build Settings -> Framework Search Paths" to let the Xcode find the frameworks.
+             * Hardcoded values are correct as of Nov 2022, Xcode 14, Kotlin 1.7.20, but might become outdated later
+             * (most likely with Xcode updates, and most likely in number "16.0")
+             *
+             * Read the respective section about Xcode Frameworks in docs for details.
+             */
+            val iosArm64DebugFramework = File(packed, "frameworks/Debug/iphonedevice16.0/$libName.framework")
+            val iosArm64ReleaseFramework = File(packed, "frameworks/Release/iphonedevice16.0/$libName.framework")
+            val iosSimulatorArm64DebugFramework = File(packed, "frameworks/Debug/iphonesimulator16.0/$libName.framework")
+            val iosSimulatorArm64ReleaseFramework = File(packed, "frameworks/Release/iphonesimulator16.0/$libName.framework")
 
             fun frameworkForNativeTarget(kotlinNativeTargetName: String, debug: Boolean) = when (kotlinNativeTargetName) {
                 "ios_arm64" -> if (debug) iosArm64DebugFramework else iosArm64ReleaseFramework
-                "ios_X64" -> if (debug) iosX64DebugFramework else iosX64ReleaseFramework
                 "ios_simulator_arm64" -> if (debug) iosSimulatorArm64DebugFramework else iosSimulatorArm64ReleaseFramework
                 else -> error("Unknown Kotlin/Native target $kotlinNativeTargetName")
             }
