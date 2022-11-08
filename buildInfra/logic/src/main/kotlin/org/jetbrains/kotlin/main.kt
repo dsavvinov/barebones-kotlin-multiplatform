@@ -2,7 +2,7 @@ package org.jetbrains.kotlin
 
 import org.jetbrains.kotlin.hardcode.DirectDependency
 import org.jetbrains.kotlin.hardcode.TransitiveDependency
-import org.jetbrains.kotlin.tasks.KmpProjectBuildTask
+import org.jetbrains.kotlin.tasks.KmmProjectBuildTask
 
 fun main(args: Array<String>) {
     fun error(message: String) {
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
         else -> return error("Unknown project $projectName")
     }
 
-    val task = KmpProjectBuildTask.allTasks.firstOrNull { it.taskName == taskName }
+    val task = KmmProjectBuildTask.allTasks.firstOrNull { it.taskName == taskName }
         ?: return error("Unknown task $taskName")
 
     task.execute(projectPaths)
@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
 fun printUsage() {
     println("""
         Usage:
-            kmpBuilder <PROJECT> <TASK>
+            kmmBuilder <PROJECT> <TASK>
         
         Available projects:
             DIRECT - tasks related to 'sources/DirectDependency'

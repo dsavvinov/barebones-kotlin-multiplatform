@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.hardcode.HardcodedPaths
 import org.jetbrains.kotlin.tools.KotlincMetadata
 import java.io.File
 
-object AssembleCommon : KmpProjectBuildTask("ASSEMBLE_COMMON") {
+object AssembleCommon : KmmProjectBuildTask("ASSEMBLE_COMMON") {
     override fun execute(paths: HardcodedPaths) {
         assembleSourceSet(paths.Sources().commonMain, paths.Outputs().AssembledBinaries().commonMain)
     }

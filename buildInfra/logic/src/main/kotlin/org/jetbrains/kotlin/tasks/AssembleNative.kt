@@ -9,7 +9,7 @@ abstract class AssembleNative(
     private val kotlinNativeTargetName: String,
     taskName: String,
     private val debug: Boolean
-) : KmpProjectBuildTask(taskName) {
+) : KmmProjectBuildTask(taskName) {
     override fun execute(paths: HardcodedPaths) {
         assembleSourceSet(
             paths.Sources().mainNativeSourceSetForTarget(kotlinNativeTargetName),

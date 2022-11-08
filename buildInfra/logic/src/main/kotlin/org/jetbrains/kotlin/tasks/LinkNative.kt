@@ -1,6 +1,5 @@
 package org.jetbrains.kotlin.tasks
 
-import org.jetbrains.kotlin.hardcode.DirectDependency
 import org.jetbrains.kotlin.hardcode.HardcodedDependencies
 import org.jetbrains.kotlin.hardcode.HardcodedPaths
 import org.jetbrains.kotlin.hardcode.TransitiveDependency
@@ -14,7 +13,7 @@ abstract class LinkNative(
     private val kotlinNativeTargetName: String,
     taskName: String,
     private val debug: Boolean
-) : KmpProjectBuildTask(taskName) {
+) : KmmProjectBuildTask(taskName) {
     override fun execute(paths: HardcodedPaths) {
         if (paths === TransitiveDependency) {
             println(
