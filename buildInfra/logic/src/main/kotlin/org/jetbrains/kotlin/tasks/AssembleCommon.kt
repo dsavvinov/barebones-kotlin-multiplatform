@@ -18,7 +18,6 @@ object AssembleCommon : KmpProjectBuildTask("ASSEMBLE_COMMON") {
         val dependenciesString = dependencies.joinToString(File.pathSeparator) { it.canonicalPath }
 
         val friendDependencies = HardcodedDependencies.friendDependencies[sourceSetRoot]
-        val dependsOn = HardcodedDependencies.dependsOn[sourceSetRoot]
 
         val arguments = buildList<String> {
             // -Xcommon-sources marks sources as common. Some language constructs (like 'expect'-modifier)
@@ -30,10 +29,6 @@ object AssembleCommon : KmpProjectBuildTask("ASSEMBLE_COMMON") {
 
             // Pass friend-paths, if any (test have them)
             if (friendDependencies != null) add("-Xfriend-paths=${friendDependencies.canonicalPath}")
-
-            // Pass dependsOn-path a.ka. refines-paths
-            if (dependsOn != null) add("-Xcommon-sources=${dependsOn.joinToString(separator = ",") { it.canonicalPath }}")
-            // TODO(dsavvinov): this is wrong, fix
 
             // Dependencies go as "classpath"
             add("-classpath")
