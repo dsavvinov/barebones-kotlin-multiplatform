@@ -45,8 +45,6 @@ object AssembleJvm : KmpProjectBuildTask("ASSEMBLE_JVM") {
             // !! DIFFERENCE FROM COMMON !!
             //
             // Currently, platform compilers take *sources* of common module as argument, not produced .kotlin_metadata!
-            // TODO(dsavvinov): probably better to lift the common logic, so readers can clearly see what is the same
-            //  and what's different
             add(sourceSetRoot.canonicalPath)
             dependsOn.orEmpty().forEach { add(it.canonicalPath) }
         }

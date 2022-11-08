@@ -65,10 +65,9 @@ abstract class LinkNative(
             add("-p")
             add("framework")
 
-            add("-no-endorsed-libs") // TODO: explain
+            add("-no-endorsed-libs")
 
             // One klib (the one resulted from this module) is specified via -Xinclude
-            // TODO: better explanation
             add("-Xinclude=${sourceKlib.canonicalPath}")
 
             // Dependencies klibs specified via repeating `-l`

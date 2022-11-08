@@ -4,11 +4,11 @@ import org.jetbrains.kotlin.toMutlivalueMap
 import java.io.File
 
 /**
- * Hardcoded dependencies of MPP libraries. In simplest non-Gradle prototype,
+ * Hardcoded dependencies of MPP libraries. In the simplest non-Gradle prototype,
  * all of them will have to be specified manually in build files
  *
  * Modelled as Map<File, File> or Map<File, List<File>>
- * Keys are paths to source-roots of consumer (like, `~/mpp-without-gradle/`)
+ * Keys are paths to source-roots of consumer (like, `~/mpp-without-gradle/sources/DirectDependency/commonMain`)
  * Values are paths to the dependency(-ies) root(s)
  */
 object HardcodedDependencies {
@@ -22,12 +22,10 @@ object HardcodedDependencies {
          * on TransitiveDependency as the whole, and Kotlin Gradle Plugin together with Gradle infers the
          * granular dependencies.
          */
-        DirectDependency.Sources().commonMain to TransitiveDependency.Outputs().Packed().commonJar,
-        DirectDependency.Sources().jvmMain to TransitiveDependency.Outputs().Packed().jvmJar,
-        // TODO(dsavvinov): not correct, figure out what to do with iOSMain
-//        DirectDependency.Sources().iosMain to TransitiveDependency.Outputs().Packed().nativeKlib,
-        DirectDependency.Sources().iosArm64Main to TransitiveDependency.Outputs().AssembledBinaries().iosArm64Main,
-        DirectDependency.Sources().iosX64Main to TransitiveDependency.Outputs().AssembledBinaries().iosX64Main,
+        DirectDependency.Sources().commonMain            to TransitiveDependency.Outputs().Packed().commonJar,
+        DirectDependency.Sources().jvmMain               to TransitiveDependency.Outputs().Packed().jvmJar,
+        DirectDependency.Sources().iosArm64Main          to TransitiveDependency.Outputs().AssembledBinaries().iosArm64Main,
+        DirectDependency.Sources().iosX64Main            to TransitiveDependency.Outputs().AssembledBinaries().iosX64Main,
         DirectDependency.Sources().iosSimulatorArm64Main to TransitiveDependency.Outputs().AssembledBinaries().iosSimulatorArm64Main,
 
         /**
@@ -37,7 +35,6 @@ object HardcodedDependencies {
          */
         DirectDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
         TransitiveDependency.Sources().commonMain to HardcodedToolchainsPaths.kotlinStdlibCommon,
-
         // NB: JVM stdlib consists of several parts
         DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJvm,
         DirectDependency.Sources().jvmMain to HardcodedToolchainsPaths.kotlinStdlibJdk7,
@@ -59,21 +56,17 @@ object HardcodedDependencies {
     val friendDependencies: Map<File, File> = mapOf(
         DirectDependency.Sources().commonTest to DirectDependency.Outputs().Packed().commonJar,
         DirectDependency.Sources().jvmTest to DirectDependency.Outputs().Packed().jvmJar,
-        // TODO(dsavvinov): iosMain
-        // DirectDependency.Sources().iosTest to DirectDependency.Outputs().Packed().nativeKlib,
 
         TransitiveDependency.Sources().commonTest to TransitiveDependency.Outputs().Packed().commonJar,
         TransitiveDependency.Sources().jvmTest to TransitiveDependency.Outputs().Packed().jvmJar,
-        // TODO(dsavvinov): iosMain
-        // TransitiveDependency.Sources().iosTest to TransitiveDependency.Outputs().Packed().nativeKlib,
     )
 
     /**
      * Hardcoding dependsOn-graph
      *
      * If user creates their own source set, it's up to them to include that source set in a dependsOn-graph
-     * properly. However, Kotlin Gradle Plugin is able to create source sets and link them with dependsOn for
-     * some simple/popular cases.
+     * properly. This is fairly advanced, and usually, Kotlin Gradle Plugin is able to create source sets and link
+     * them with dependsOn for popular cases.
      *
      * Also note, that if users ever specify dependsOn by hand, they only declare direct dependsOn edges, but not
      * transitive ones, e.g. iosArm64Main -> iosMain, but not iosArm64Main -> commonMain. Compiler needs the full

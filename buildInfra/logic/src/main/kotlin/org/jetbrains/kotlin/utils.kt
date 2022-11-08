@@ -19,8 +19,8 @@ fun File.jarOutputStream(): JarOutputStream = JarOutputStream(outputStream())
 
 /**
  * Creates a *new* JAR-file at [destination] with [sources]
- * being places at top-level. If [sources] is a directory,
- * all it's content packed as well.
+ * being placed at the top-level. If [sources] is a directory,
+ * all its content packed as well.
  */
 fun packJar(destination: File, sources: List<File>) {
     destination.delete()

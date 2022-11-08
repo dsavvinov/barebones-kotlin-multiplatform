@@ -15,7 +15,7 @@ object HardcodedToolchainsPaths {
     val kotlincJvm = File(kotlincDistBin, "kotlinc-jvm")
     val kotlincMetadata = File(kotlincDistBin, "kotlinc-metadata")
 
-    // kotlin-native dist: distirbuted separately for semi-historical reasons
+    // kotlin-native dist: distributed separately for semi-historical reasons
     private val kotlinNativeDist = File(tools, "kotlin-native")
     private val kotlinNativeDistBin = File(kotlinNativeDist, "bin")
     val kotlincNative = File(kotlinNativeDistBin, "kotlinc-native")

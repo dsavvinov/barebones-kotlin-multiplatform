@@ -49,7 +49,7 @@ abstract class AssembleNative(
             add("library")
 
             // Very important property! It has to be unique across all K/N modules linked together, and will
-            // affect how Kotlin/Native code will look from ObjC/Swift perspective.
+            // affect how Kotlin/Native code will look like from ObjC/Swift perspective.
             //
             // If no name specified, K/N will take simple name of the specified "-o" File. This doesn't work for us,
             // as simple name of "-o" both for DirectDependency and TransitiveDependency is the name of K/N target
@@ -88,7 +88,9 @@ abstract class AssembleNative(
             // Free args: sources (source roots) to compile. Note that they should be a superset of -Xcommon-sources
             dependsOn.orEmpty().forEach { add(it.canonicalPath) }
             // The next line is commented, because in our examples we don't have sources in target-specific source sets,
-            // and the compiler is intolerant to non-existent paths
+            // and the compiler is intolerant to non-existent paths.
+            // In the real world, Kotlin Gradle Plugin checks if source roots are non-empty before passing them to the
+            // compiler
             // add(sourceSetRoot.canonicalPath)
         }
 
