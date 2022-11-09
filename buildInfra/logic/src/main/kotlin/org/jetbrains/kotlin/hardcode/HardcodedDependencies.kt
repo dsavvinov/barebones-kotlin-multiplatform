@@ -8,7 +8,7 @@ import java.io.File
  * all of them will have to be specified manually in build files
  *
  * Modelled as Map<File, File> or Map<File, List<File>>
- * Keys are paths to source-roots of consumer (like, `~/mpp-without-gradle/sources/DirectDependency/commonMain`)
+ * Keys are paths to source-roots of consumer (like, `~/<repo-root>/sources/DirectDependency/commonMain`)
  * Values are paths to the dependency(-ies) root(s)
  */
 object HardcodedDependencies {

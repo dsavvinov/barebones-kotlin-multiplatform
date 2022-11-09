@@ -60,7 +60,7 @@ val repositoryRoot: File by lazy {
         
         None of them contained folders 'buildInfra', 'sources' and file 'README.md',
         as expected from the repository root. Check that you're running `kmmBuilder`
-        from subtree of `mpp-without-gradle` repository
+        from subtree of the cloned repository
         """.trimIndent()
     )
 }
