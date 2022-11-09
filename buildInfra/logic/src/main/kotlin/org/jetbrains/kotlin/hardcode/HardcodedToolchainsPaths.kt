@@ -1,10 +1,10 @@
 package org.jetbrains.kotlin.hardcode
 
+import org.jetbrains.kotlin.repositoryRoot
 import java.io.File
 
 object HardcodedToolchainsPaths {
-    private val repoRoot = File("../../")
-    private val tools = File(repoRoot, "buildInfra/tools")
+    private val tools = File(repositoryRoot, "buildInfra/tools")
 
     private val kotlinDist = File(tools, "kotlinc")
     private val kotlincDistBin = File(kotlinDist, "bin")

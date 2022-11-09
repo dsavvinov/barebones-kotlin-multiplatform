@@ -1,5 +1,6 @@
 package org.jetbrains.kotlin.hardcode
 
+import org.jetbrains.kotlin.repositoryRoot
 import java.io.File
 
 val TransitiveDependency = HardcodedPaths("TransitiveDependency")
@@ -20,8 +21,7 @@ val DirectDependency = HardcodedPaths("DirectDependency")
  * Therefore, this specific example consciously omits this whole discussion.
  */
 class HardcodedPaths(val libName: String) {
-    private val repoRoot = File("../../")
-    private val sources = File(repoRoot, "sources")
+    private val sources = File(repositoryRoot, "sources")
 
     inner class Sources {
         val sharedKmmSources = File(sources, "$libName/src")
@@ -64,7 +64,7 @@ class HardcodedPaths(val libName: String) {
         }
     }
 
-    val outDir = File("$repoRoot/buildInfra", "output")
+    val outDir = File("$repositoryRoot/buildInfra", "output")
 
     inner class Outputs {
         inner class AssembledBinaries {
